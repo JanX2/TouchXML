@@ -39,17 +39,17 @@
 
 - (void)insertChild:(CXMLNode *)child atIndex:(NSUInteger)index
 {
-[self.nodePool addObject:child];
-
-CXMLNode *theCurrentNode = [self.children objectAtIndex:index];
-xmlAddPrevSibling(theCurrentNode->_node, child->_node);
+    [self.nodePool addObject:child];
+    
+    CXMLNode *theCurrentNode = [self.children objectAtIndex:index];
+    xmlAddPrevSibling(theCurrentNode->_node, child->_node);
 }
 
 - (void)addChild:(CXMLNode *)child
 {
-[self.nodePool addObject:child];
-
-xmlAddChild(self->_node, child->_node);
+    [self.nodePool addObject:child];
+    
+    xmlAddChild(self->_node, child->_node);
 }
 
 @end
