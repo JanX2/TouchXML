@@ -90,8 +90,23 @@ static int MyXmlOutputCloseCallback(void * context);
     if (_node->type == XML_TEXT_NODE || _node->type == XML_CDATA_SECTION_NODE) 
         return [NSString stringWithUTF8String:(const char *)_node->content];
     
+    // if (_node->type == XML_ATTRIBUTE_NODE)
+    //	return [NSString stringWithUTF8String:(const char *)_node->children->content];
+    
+    // AM@VARIAN: SOAP compatibility
     if (_node->type == XML_ATTRIBUTE_NODE)
-        return [NSString stringWithUTF8String:(const char *)_node->children->content];
+    {
+        NSString *attNode = [NSString stringWithUTF8String:(const char *)_node->children->content];
+        
+        NSRange split = [attNode rangeOfString:@":"];  
+        if (split.length > 0)
+        {
+            return [attNode substringFromIndex:split.location + 1];
+        }
+        
+        return attNode;
+    }
+    
     
     NSMutableString *theStringValue = [[NSMutableString alloc] init];
     
