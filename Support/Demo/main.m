@@ -34,14 +34,10 @@
 
 int main(int argc, char *argv[])
 {
-@autoreleasepool {
-
-
-NSError *theError = NULL;
-CXMLDocument *theXMLDocument = [[CXMLDocument alloc] initWithXMLString:@"<enclosure url=\"http://www.flickr.com/apps/video/stewart.swf?v=71377&amp;photo_id=4445665165\" type=\"application/x-shockwave-flash\"/>" options:0 error:&theError];
-NSLog(@"%@", [[theXMLDocument rootElement] XMLString]);
-
-
-}
-return 0;
+    @autoreleasepool {
+        NSError *theError = NULL;
+        CXMLDocument *theXMLDocument = [[CXMLDocument alloc] initWithXMLString:@"<enclosure url=\"http://www.flickr.com/apps/video/stewart.swf?v=71377&amp;photo_id=4445665165\" type=\"application/x-shockwave-flash\"/>" options:0 error:&theError];
+        NSLog(@"%@", [[theXMLDocument rootElement] XMLString]);
+    }
+    return 0;
 }

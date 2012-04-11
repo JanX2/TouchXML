@@ -48,7 +48,7 @@
     return self;
 }
 
-- (void) dealloc
+- (void)dealloc
 {
     _prefix = nil;
     _uri = nil;

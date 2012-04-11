@@ -267,6 +267,9 @@
 		457940EA0D82214700EB2D22 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				45045CA3121E47ED00BD4662 /* Demo */,
+				458CE9C40F9C12BB009EF591 /* Creation */,
+				458CE9C90F9C12BB009EF591 /* Tidy */,
 				45AA24120E280F9700E12B55 /* TouchXML.h */,
 				457940EB0D82214700EB2D22 /* CXMLDocument.h */,
 				457940EC0D82214700EB2D22 /* CXMLDocument.m */,
@@ -284,11 +287,8 @@
 				457940F20D82214700EB2D22 /* CXMLNode_PrivateExtensions.m */,
 				45AA86A40DAB1D08008827B0 /* CXMLNode_XPathExtensions.h */,
 				45AA86A50DAB1D08008827B0 /* CXMLNode_XPathExtensions.m */,
-				458CE9C40F9C12BB009EF591 /* Creation */,
-				458CE9C90F9C12BB009EF591 /* Tidy */,
 				030E27C71202762F008B53A4 /* CXMLNamespaceNode.h */,
 				030E27C81202762F008B53A4 /* CXMLNamespaceNode.m */,
-				45045CA3121E47ED00BD4662 /* Demo */,
 			);
 			path = Source;
 			sourceTree = "<group>";
