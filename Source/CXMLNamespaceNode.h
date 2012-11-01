@@ -40,6 +40,6 @@
     CXMLElement *_parent;
 }
 
-- (id) initWithPrefix:(NSString *)prefix URI:(NSString *)uri parentElement:(CXMLElement *)parent;
+- (id)initWithPrefix:(NSString *)prefix URI:(NSString *)uri parentElement:(CXMLElement *)parent;
 
 @end

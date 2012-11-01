@@ -36,15 +36,15 @@
 #pragma mark -
 #pragma mark Init and dealloc
 
-- (id) initWithPrefix:(NSString *)prefix URI:(NSString *)uri parentElement:(CXMLElement *)parent
+- (id)initWithPrefix:(NSString *)prefix URI:(NSString *)uri parentElement:(CXMLElement *)parent
 {
-    if ((self = [super init]) != NULL) 
+    if ((self = [super init]) != NULL)
     {
         _prefix = [prefix copy];
         _uri = [uri copy];
         _parent = parent; // Don't retain parent
     }
-    
+
     return self;
 }
 
@@ -53,13 +53,13 @@
     _prefix = nil;
     _uri = nil;
     _parent = nil; // Parent not retained
-    
+
 }
 
 #pragma mark -
 #pragma mark Overidden methods
 
-// NB: We need to override every method that relies on _node as namespaces in libXML don't have a xmlNode 
+// NB: We need to override every method that relies on _node as namespaces in libXML don't have a xmlNode
 
 - (CXMLNodeKind)kind
 {
@@ -140,7 +140,7 @@
 {
     if (_prefix && [_prefix length] > 0)
         return [NSString stringWithFormat:@"xmlns:%@=\"%@\"", _prefix, _uri];
-    
+
     return [NSString stringWithFormat:@"xmlns=\"%@\"", _uri];
 }
 

@@ -48,16 +48,16 @@
 - (NSData *)tidyData:(NSData *)inData inputFormat:(CTidyFormat)inInputFormat outputFormat:(CTidyFormat)inOutputFormat encoding:(const char*)encoding diagnostics:(NSString **)outDiagnostics error:(NSError **)outError
 {
     TidyDoc theTidyDocument = tidyCreate();
-    
+
     int theResultCode = 0;
-    
+
     // Set input format if input is XML (xhtml & html are the tidy 'default')
     if (inInputFormat == TidyFormat_XML)
     {
         theResultCode = tidyOptSetBool(theTidyDocument, TidyXmlTags, YES);
         NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
     }
-    
+
     // Set output format
     TidyOptionId theOutputValue = TidyXmlOut;
     if (inOutputFormat == TidyFormat_HTML)
@@ -66,31 +66,31 @@
         theOutputValue = TidyXhtmlOut;
     theResultCode = tidyOptSetBool(theTidyDocument, theOutputValue, YES);
     NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
-    
+
     // Force output even if errors found
     theResultCode = tidyOptSetBool(theTidyDocument, TidyForceOutput, YES);
     NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
-    
+
     // Set encoding - same for input and output
     theResultCode = tidySetInCharEncoding(theTidyDocument, encoding)
     NSAssert(theResultCode >= 0, @"tidySetInCharEncoding() should return 0");
     theResultCode = tidySetOutCharEncoding(theTidyDocument, encoding);
     NSAssert(theResultCode >= 0, @"tidySetOutCharEncoding() should return 0");
-    
+
     // Create an error buffer
     TidyBuffer theErrorBuffer;
     tidyBufInit(&theErrorBuffer);
     theResultCode = tidySetErrorBuffer(theTidyDocument, &theErrorBuffer);
     NSAssert(theResultCode >= 0, @"tidySetErrorBuffer() should return 0");
-    
+
     // #############################################################################
-    
+
     // Create an input buffer and copy input to it (TODO uses 2X memory == bad!)
     TidyBuffer theInputBuffer;
     tidyBufAlloc(&theInputBuffer, [inData length]);
     memcpy(theInputBuffer.bp, [inData bytes], [inData length]);
     theInputBuffer.size = [inData length];
-    
+
     // Parse the data.
     theResultCode = tidyParseBuffer(theTidyDocument, &theInputBuffer);
     if (theResultCode < 0)
@@ -104,20 +104,20 @@
         }
         return(NO);
     }
-    
-    // Clean up input buffer.	
+
+    // Clean up input buffer.
     tidyBufFree(&theInputBuffer);
-    
+
     // Repair the data
     theResultCode = tidyCleanAndRepair(theTidyDocument);
     if (theResultCode < 0)
     {
         return(NULL);
     }
-    
+
     //theResultCode = tidyRunDiagnostics(theTidyDocument);
-    
-    // 
+
+    //
     TidyBuffer theOutputBuffer;
     tidyBufInit(&theOutputBuffer);
     theResultCode = tidySaveBuffer(theTidyDocument, &theOutputBuffer);
@@ -126,35 +126,35 @@
     NSAssert(theOutputBuffer.bp != NULL, @"The buffer should not be null.");
     NSData *theOutput = [NSData dataWithBytes:theOutputBuffer.bp length:theOutputBuffer.size];
     tidyBufFree(&theOutputBuffer);
-    
-    // 
+
+    //
     if (outDiagnostics && theErrorBuffer.bp != NULL)
     {
         NSData *theErrorData = [NSData dataWithBytes:theErrorBuffer.bp length:theErrorBuffer.size];
         *outDiagnostics = [[[NSString alloc] initWithData:theErrorData encoding:NSUTF8StringEncoding] autorelease];
     }
     tidyBufFree(&theErrorBuffer);
-    
+
     // #############################################################################
-    
+
     tidyRelease(theTidyDocument);
-    
+
     return(theOutput);
 }
 
 - (NSString *)tidyString:(NSString *)inString inputFormat:(CTidyFormat)inInputFormat outputFormat:(CTidyFormat)inOutputFormat encoding:(const char*)encoding diagnostics:(NSString **)outDiagnostics error:(NSError **)outError
 {
     TidyDoc theTidyDocument = tidyCreate();
-    
+
     int theResultCode = 0;
-    
+
     // Set input format if input is XML (xhtml & html are the tidy 'default')
     if (inInputFormat == TidyFormat_XML)
     {
         theResultCode = tidyOptSetBool(theTidyDocument, TidyXmlTags, YES);
         NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
     }
-    
+
     // Set output format
     TidyOptionId theOutputValue = TidyXmlOut;
     if (inOutputFormat == TidyFormat_HTML)
@@ -163,25 +163,25 @@
         theOutputValue = TidyXhtmlOut;
     theResultCode = tidyOptSetBool(theTidyDocument, theOutputValue, YES);
     NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
-    
+
     // Force output even if errors found
     theResultCode = tidyOptSetBool(theTidyDocument, TidyForceOutput, YES);
     NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
-    
+
     // Set encoding - same for input and output
     theResultCode = tidySetInCharEncoding(theTidyDocument, encoding)
     NSAssert(theResultCode >= 0, @"tidySetInCharEncoding() should return 0");
     theResultCode = tidySetOutCharEncoding(theTidyDocument, encoding);
     NSAssert(theResultCode >= 0, @"tidySetOutCharEncoding() should return 0");
-    
+
     // Create an error buffer
     TidyBuffer theErrorBuffer;
     tidyBufInit(&theErrorBuffer);
     theResultCode = tidySetErrorBuffer(theTidyDocument, &theErrorBuffer);
     NSAssert(theResultCode >= 0, @"tidySetErrorBuffer() should return 0");
-    
+
     // #############################################################################
-    
+
     // Parse the data.
     theResultCode = tidyParseString(theTidyDocument, [inString UTF8String]);
     if (theResultCode < 0)
@@ -195,39 +195,39 @@
         }
         return(NO);
     }
-    
+
     // Repair the data
     theResultCode = tidyCleanAndRepair(theTidyDocument);
     if (theResultCode < 0)
     {
         return(NULL);
     }
-    
+
     //theResultCode = tidyRunDiagnostics(theTidyDocument);
-    
-    // 
+
+    //
     uint theBufferLength = 0;
-    
+
     theResultCode = tidySaveString(theTidyDocument, NULL, &theBufferLength);
-    
+
     NSMutableData *theOutputBuffer = [NSMutableData dataWithLength:theBufferLength];
-    
+
     theResultCode = tidySaveString(theTidyDocument, [theOutputBuffer mutableBytes], &theBufferLength);
-    
+
     NSString *theString = [[[NSString alloc] initWithData:theOutputBuffer encoding:NSUTF8StringEncoding] autorelease];
-    
-    // 
+
+    //
     if (outDiagnostics && theErrorBuffer.bp != NULL)
     {
         NSData *theErrorData = [NSData dataWithBytes:theErrorBuffer.bp length:theErrorBuffer.size];
         *outDiagnostics = [[[NSString alloc] initWithData:theErrorData encoding:NSUTF8StringEncoding] autorelease];
     }
     tidyBufFree(&theErrorBuffer);
-    
+
     // #############################################################################
-    
+
     tidyRelease(theTidyDocument);
-    
+
     return(theString);
 }
 

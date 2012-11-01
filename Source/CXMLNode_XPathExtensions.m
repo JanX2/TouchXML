@@ -39,22 +39,22 @@
 
 @implementation CXMLNode (CXMLNode_NamespaceExtensions)
 
-- (NSArray *)nodesForXPath:(NSString *)xpath namespaceMappings:(NSDictionary *)inNamespaceMappings error:(NSError **)error;
+- (NSArray *)nodesForXPath:(NSString *)xpath namespaceMappings:(NSDictionary *)inNamespaceMappings error:(NSError **)error
 {
 #pragma unused (error)
-    
+
     NSAssert(_node != NULL, @"TODO");
-    
+
     NSArray *theResult = NULL;
-    
+
     xmlXPathContextPtr theXPathContext = xmlXPathNewContext(_node->doc);
     theXPathContext->node = _node;
-    
+
     for (NSString *thePrefix in inNamespaceMappings)
     {
         xmlXPathRegisterNs(theXPathContext, (xmlChar *)[thePrefix UTF8String], (xmlChar *)[[inNamespaceMappings objectForKey:thePrefix] UTF8String]);
     }
-    
+
     // TODO considering putting xmlChar <-> UTF8 into a NSString category
     xmlXPathObjectPtr theXPathObject = xmlXPathEvalExpression((const xmlChar *)[xpath UTF8String], theXPathContext);
     if (xmlXPathNodeSetIsEmpty(theXPathObject->nodesetval))
@@ -68,12 +68,12 @@
             xmlNodePtr theNode = theXPathObject->nodesetval->nodeTab[N];
             [theArray addObject:[CXMLNode nodeWithLibXMLNode:theNode freeOnDealloc:NO]];
         }
-        
+
         theResult = theArray;
     }
-    
+
     xmlXPathFreeObject(theXPathObject);
-    
+
     xmlXPathFreeContext(theXPathContext);
     return(theResult);
 }
