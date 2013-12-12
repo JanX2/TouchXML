@@ -181,14 +181,17 @@
 
 - (void)dealloc
 {
-    // Fix for #35 http://code.google.com/p/touchcode/issues/detail?id=35 -- clear up the node objects first (inside a pool so I _know_ they're cleared) and then freeing the document
+    // Fix for #35 http://code.google.com/p/touchcode/issues/detail?id=35 -- clear up the node objects first
+    //   (inside a pool so I _know_ they're cleared) and then freeing the document
 
     @autoreleasepool {
-
+        for (CXMLNode *theNode in nodePool) {
+            [theNode invalidate];
+        }
+        
         nodePool = NULL;
-
     }
-    //
+
     xmlUnlinkNode(_node);
     xmlFreeDoc((xmlDocPtr)_node);
     _node = NULL;
