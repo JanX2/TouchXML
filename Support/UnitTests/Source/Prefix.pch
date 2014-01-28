@@ -4,6 +4,5 @@
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
-
-	#define TOUCHXMLUSETIDY 1
+    #define TOUCHXMLUSETIDY 1
 #endif

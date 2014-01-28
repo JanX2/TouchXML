@@ -38,9 +38,9 @@
 
 - (CXMLElement *)subelement:(NSString *)inName;
 {
-CXMLElement *theSubelement = [CXMLNode elementWithName:inName];
-[self addChild:theSubelement];
-return(theSubelement);
+    CXMLElement *theSubelement = [CXMLNode elementWithName:inName];
+    [self addChild:theSubelement];
+    return(theSubelement);
 }
 
 @end

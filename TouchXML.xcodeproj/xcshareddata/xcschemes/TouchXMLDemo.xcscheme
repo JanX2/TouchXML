@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "457941040D82219400EB2D22"
-               BuildableName = "All"
-               BlueprintName = "All"
+               BlueprintIdentifier = "456A848A0D81DB06000E29C9"
+               BuildableName = "TouchXMLDemo"
+               BlueprintName = "TouchXMLDemo"
                ReferencedContainer = "container:TouchXML.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -39,6 +39,9 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <PathRunnable
+         FilePath = "/Users/schwa/Library/Developer/Xcode/DerivedData/TouchXML-dibkpahnourzkzbrtpnrqpfcpshq/Build/Products/Debug/TouchXMLDemo">
+      </PathRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
