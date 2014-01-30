@@ -42,7 +42,7 @@
 
 + (CTidy *)tidy
 {
-    return([[[self alloc] init] autorelease]);
+    return([[self alloc] init]);
 }
 
 - (NSData *)tidyData:(NSData *)inData inputFormat:(CTidyFormat)inInputFormat outputFormat:(CTidyFormat)inOutputFormat encoding:(const char*)encoding diagnostics:(NSString **)outDiagnostics error:(NSError **)outError
@@ -72,7 +72,7 @@
     NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
 
     // Set encoding - same for input and output
-    theResultCode = tidySetInCharEncoding(theTidyDocument, encoding)
+    theResultCode = tidySetInCharEncoding(theTidyDocument, encoding);
     NSAssert(theResultCode >= 0, @"tidySetInCharEncoding() should return 0");
     theResultCode = tidySetOutCharEncoding(theTidyDocument, encoding);
     NSAssert(theResultCode >= 0, @"tidySetOutCharEncoding() should return 0");
@@ -131,7 +131,7 @@
     if (outDiagnostics && theErrorBuffer.bp != NULL)
     {
         NSData *theErrorData = [NSData dataWithBytes:theErrorBuffer.bp length:theErrorBuffer.size];
-        *outDiagnostics = [[[NSString alloc] initWithData:theErrorData encoding:NSUTF8StringEncoding] autorelease];
+        *outDiagnostics = [[NSString alloc] initWithData:theErrorData encoding:NSUTF8StringEncoding];
     }
     tidyBufFree(&theErrorBuffer);
 
@@ -169,7 +169,7 @@
     NSAssert(theResultCode >= 0, @"tidyOptSetBool() should return 0");
 
     // Set encoding - same for input and output
-    theResultCode = tidySetInCharEncoding(theTidyDocument, encoding)
+    theResultCode = tidySetInCharEncoding(theTidyDocument, encoding);
     NSAssert(theResultCode >= 0, @"tidySetInCharEncoding() should return 0");
     theResultCode = tidySetOutCharEncoding(theTidyDocument, encoding);
     NSAssert(theResultCode >= 0, @"tidySetOutCharEncoding() should return 0");
@@ -214,13 +214,13 @@
 
     theResultCode = tidySaveString(theTidyDocument, [theOutputBuffer mutableBytes], &theBufferLength);
 
-    NSString *theString = [[[NSString alloc] initWithData:theOutputBuffer encoding:NSUTF8StringEncoding] autorelease];
+    NSString *theString = [[NSString alloc] initWithData:theOutputBuffer encoding:NSUTF8StringEncoding];
 
     //
     if (outDiagnostics && theErrorBuffer.bp != NULL)
     {
         NSData *theErrorData = [NSData dataWithBytes:theErrorBuffer.bp length:theErrorBuffer.size];
-        *outDiagnostics = [[[NSString alloc] initWithData:theErrorData encoding:NSUTF8StringEncoding] autorelease];
+        *outDiagnostics = [[NSString alloc] initWithData:theErrorData encoding:NSUTF8StringEncoding];
     }
     tidyBufFree(&theErrorBuffer);
 
