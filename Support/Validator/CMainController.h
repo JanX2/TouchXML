@@ -35,7 +35,7 @@
 @interface CMainController : NSObject {
 }
 
-@property (readwrite, nonatomic, assign) IBOutlet NSWindow *window;
+@property (readwrite, nonatomic, weak) IBOutlet NSWindow *window;
 @property (readwrite, nonatomic, copy) NSString *XMLString;
 @property (readwrite, nonatomic, copy) NSString *XPath;
 @property (readwrite, nonatomic, copy) NSString *status;
